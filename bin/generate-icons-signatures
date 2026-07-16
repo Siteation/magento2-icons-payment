@@ -1,0 +1,72 @@
+#!/usr/bin/env php
+
+<?php
+
+function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
+{
+    $str = str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
+    if (!$capitalizeFirstCharacter) {
+        $str[0] = strtolower($str[0]);
+    }
+
+    return $str;
+}
+
+$iconPath = "view/frontend/web/svg/default";
+$dir = dirname(__DIR__, 1) . "/" . $iconPath;
+$icons = array_diff(scandir($dir), array('..', '.'));
+sort($icons);
+$outputPath = dirname(__DIR__, 1) . "/ViewModel/PaymentIconsInterface.php";
+
+// Set Head
+file_put_contents(
+  $outputPath,
+  "<?php declare(strict_types=1);
+
+/**
+ * Siteation - https://siteation.dev/
+ * Copyright © Siteation. All rights reserved.
+ * See LICENSE file for details.
+ */
+
+namespace Siteation\IconsPayment\ViewModel;
+
+// phpcs:disable Magento2.NamingConvention.InterfaceName.WrongInterfaceName
+// phpcs:disable Generic.Files.LineLength.TooLong
+
+/**
+ * These method signatures were generated with bin/generate-icons-signatures
+ *
+");
+
+// Create interface code (dedupe: the set has alias files, e.g. in3.svg + in-3.svg,
+// that map to the same camelCase accessor — emit each @method hint once).
+$seen = [];
+foreach ($icons as &$icon) {
+    $icon = str_replace('.svg', '', $icon);
+    $method = dashesToCamelCase($icon);
+    if (isset($seen[$method])) {
+        continue;
+    }
+    $seen[$method] = true;
+
+    $string = " * @method string "
+        . $method
+        . "Html(string \$classnames = '', ?int \$width = 24, ?int \$height = 24, array \$attributes = [])";
+
+    file_put_contents($outputPath, $string . "\n", FILE_APPEND);
+}
+
+// Set closing part of interface
+file_put_contents($outputPath, " */
+interface PaymentIconsInterface
+{
+    public function renderHtml(
+        string \$icon,
+        string \$classNames = '',
+        ?int \$width = 24,
+        ?int \$height = 24,
+        array \$attributes = []
+    ): string;
+}
+", FILE_APPEND);
