@@ -8,13 +8,22 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [1.0.0]
 
 ### Added
-- Initial release. The framework-agnostic payment-icon library, split out of
+- Initial release. The payment-icon library, split out of
   `siteation/magento2-hyva-icons-payment` so the SVG marks can render in any Magento 2
-  context (Luma, Hyvä, Nebula, or a standalone/framework-agnostic surface like the
-  Siteation checkout) with no Hyvä dependency.
-- `Model\SvgIconRenderer` — a dependency-light inline-SVG renderer (size / class /
-  attributes / `<title>`, id-disambiguation, missing-icon safe).
+  context (Luma, Hyvä, Nebula, or a standalone surface like the Siteation checkout).
 - `ViewModel\PaymentIcons`, `PaymentIconsFlat`, `PaymentIconsMono` — plain
-  `ArgumentInterface` view models (one per style), with the `renderHtml()` contract +
-  magic per-icon accessors on `PaymentIconsInterface`.
+  `ArgumentInterface` view models (one per style), with the `renderHtml()` contract on
+  `PaymentIconsInterface` plus magic per-icon accessors.
+- `renderHtml()` hands the icon to Hyvä's `SvgIcons` where that class is installed, so
+  a Hyvä store gets inline SVG with the theme fallback, icon cache and Alpine handling
+  it already has, from the assets this package ships. Without Hyvä the mark falls back
+  to an `<img>` at the static file, which needs nothing but `magento/framework`.
 - The `default` / `flat` / `mono` SVG sets (40 marks each).
+
+### Notes
+- Hyvä's `SvgIcons` is constructed directly from injected `magento/framework`
+  services, not fetched from the object manager, so the optional dependency costs no
+  service locator. Being outside DI, it cannot be plugged in or preferenced.
+- Sizing defaults to `24 × 16`, the intrinsic size of every mark.
+- The `<img>` fallback cannot reach inside the document, so the `mono` set renders
+  black and CSS cannot address the shapes on a store without Hyvä.

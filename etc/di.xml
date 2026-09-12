@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <!--
-    Bind each payment icon view model to its icon set (subdirectory of
-    view/frontend/web/svg). Mirrors the set split of the Hyvä package, but the
-    renderer is framework-agnostic (Siteation\IconsPayment\Model\SvgIconRenderer),
-    so these view models work in any theme.
+    Bind each payment icon view model to its icon set, which is a subdirectory of
+    view/frontend/web/svg. The set goes to Hyvä's SvgIcons where that is installed,
+    and into the <img> path otherwise.
 -->
 <config
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

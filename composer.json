@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "type": "magento2-module",
-  "description": "Framework-agnostic payment-method icons for Magento 2 — the SVG library plus a plain inline-SVG renderer, with no Hyvä dependency",
+  "description": "Payment-method icons for Magento 2. The SVG library plus view models that render an <img> anywhere, and inline SVG through Hyvä where it is installed.",
   "keywords": [
     "magento2",
     "magento2-module",
@@ -20,6 +20,9 @@
   "require": {
     "php": ">=8.1",
     "magento/framework": ">=102.0.0"
+  },
+  "suggest": {
+    "hyva-themes/magento2-theme-module": "Renders the marks as inline SVG, with theme fallback and the Hyva icon cache, instead of as an <img>"
   },
   "autoload": {
     "files": [

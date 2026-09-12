@@ -1,21 +1,18 @@
-# Siteation — Magento 2 Payment Icons (framework-agnostic)
+# Siteation, Magento 2 Payment Icons
 
 The payment-method icon **library** (Visa, Mastercard, iDEAL, PayPal, Bancontact,
-Apple Pay, Klarna, … — 40 marks in three styles) plus a **plain inline-SVG
-renderer**, with **no theme or framework dependency**.
+Apple Pay, Klarna, … 40 marks in three styles) plus view models that render it.
 
-Because it depends on nothing but `magento/framework`, it renders the same marks in
-**any** Magento 2 context:
+The view models are a wrapper around one decision:
 
-- **Luma** and Luma-family themes
-- **Hyvä** themes (directly, or via the thin `siteation/magento2-hyva-icons-payment`
-  adapter for Hyvä-CMS icon-picker support)
-- **Nebula** and other custom themes
-- **Framework-agnostic** surfaces such as the Siteation standalone checkout — no
-  Hyvä, no Tailwind, no theme build required
+| Store | `renderHtml()` gives you | Renderer |
+| ----- | ------------------------ | -------- |
+| Hyvä installed | inline `<svg>` | Hyvä's `SvgIcons`, pointed at this package's assets |
+| anything else | `<img src="…">` | this package |
 
-This package is the single source of truth for the SVG library; the Hyvä package is a
-thin adapter over it.
+So the marks work in Luma, Nebula, a custom theme or a standalone checkout with
+nothing but `magento/framework`, and a Hyvä store gets the theme fallback, icon cache
+and Alpine handling it already has, without a second copy of the SVG library.
 
 ## Installation
 
@@ -36,7 +33,7 @@ Three sets live under `view/frontend/web/svg/`:
 
 ## Usage
 
-Inject a view model as a block argument (works in any theme — no `ViewModelRegistry`
+Inject a view model as a block argument (works in any theme, no `ViewModelRegistry`
 required) and call `renderHtml()`:
 
 ```xml
@@ -57,10 +54,40 @@ $icons = $block->getData('payment_icons');
 <?= /* @noEscape */ $icons->idealHtml('my-icon', 40, 26) ?><!-- magic accessor -->
 ```
 
-`renderHtml(string $icon, string $classNames = '', ?int $width = 24, ?int $height =
-24, array $attributes = []): string` returns inline `<svg>` markup. A missing icon
-returns `''` (never fatals). Repeated internal SVG ids are disambiguated
-automatically, so many icons on one page never clash.
+One method, `renderHtml(string $icon, string $classNames = '', ?int $width = 24,
+?int $height = 16, array $attributes = []): string`. What it returns depends on the
+store, nothing else changes:
+
+```html
+<!-- with Hyva -->
+<svg class="my-icon" width="40" height="26" …><title>iDEAL</title>…</svg>
+
+<!-- without -->
+<img src="…/Siteation_IconsPayment/svg/default/ideal.svg" class="my-icon" width="40"
+     height="26" alt="iDEAL" loading="lazy" decoding="async">
+```
+
+A missing icon returns `''`, so a typo never fatals a checkout. Extra `$attributes`
+land on the root element either way, so `['loading' => 'eager']` works for marks above
+the fold.
+
+Sizing defaults to `24 × 16`, the intrinsic size of every mark in the library. Pass
+your own width and height to scale, and keep the 3:2 ratio or the `<img>` will
+stretch.
+
+### Accessibility
+
+Pass a `title` in `$attributes` when a mark is the only thing naming a payment
+option. It becomes the `<title>` of an inline icon and the `alt` text of an `<img>`.
+
+Without one the fallback renders `alt=""`, which is how HTML says decorative. That is
+the right default for marks sitting next to a label that repeats the same name.
+
+### What the fallback cannot do
+
+Two things need inline SVG, so they need a Hyvä store: styling the icon internals from
+your stylesheet, and the `mono` set, whose `currentColor` fills render black inside an
+`<img>`.
 
 To render the marks a store actually accepts, pair this with
 `siteation/magento2-storeinfo-payments`, whose `StorePayments::getPaymentMethods()`
