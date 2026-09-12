@@ -22,7 +22,7 @@
     "magento/framework": ">=102.0.0"
   },
   "suggest": {
-    "hyva-themes/magento2-theme-module": "Renders the marks as inline SVG, with theme fallback and the Hyva icon cache, instead of as an <img>"
+    "hyva-themes/magento2-theme-module": "Renders the icons as inline SVG, with theme fallback and the Hyva icon cache, instead of as an <img>"
   },
   "autoload": {
     "files": [

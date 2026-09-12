@@ -20,8 +20,8 @@ use Magento\Framework\View\Element\Block\ArgumentInterface;
  * Base view model for a payment icon set (default / flat / mono), bound to its set
  * through di.xml.
  *
- * Hyvä's SvgIcons renders the mark inline where that package is installed. Without it
- * the mark falls back to an <img> at the static file, which needs nothing but
+ * Hyvä's SvgIcons renders the icon inline where that package is installed. Without it
+ * the icon falls back to an <img> at the static file, which needs nothing but
  * magento/framework, but cannot be reached from a stylesheet, so the mono set renders
  * black there.
  */
@@ -78,7 +78,7 @@ abstract class AbstractPaymentIcons implements ArgumentInterface, PaymentIconsIn
             return $this->hyvaIcons?->renderHtml($icon, $classNames, $width, $height, $attributes)
                 ?? $this->renderImage($icon, $classNames, $width, $height, $attributes);
         } catch (NotFoundException) {
-            // Payment marks are decorative: a missing icon must not break checkout.
+            // Payment icons are decorative: a missing one must not break checkout.
             return '';
         }
     }
@@ -124,7 +124,7 @@ abstract class AbstractPaymentIcons implements ArgumentInterface, PaymentIconsIn
             'class' => trim($classNames) ?: null,
             'width' => $width ?: null,
             'height' => $height ?: null,
-            // An unnamed mark sits next to a label repeating it, which is what alt="" is for.
+            // An unnamed icon sits next to a label repeating it, which is what alt="" is for.
             'alt' => (string) ($attributes['title'] ?? ''),
             'loading' => 'lazy',
             'decoding' => 'async',

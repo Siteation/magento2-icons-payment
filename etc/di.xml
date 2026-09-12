@@ -1,9 +1,4 @@
 <?xml version="1.0"?>
-<!--
-    Bind each payment icon view model to its icon set, which is a subdirectory of
-    view/frontend/web/svg. The set goes to Hyvä's SvgIcons where that is installed,
-    and into the <img> path otherwise.
--->
 <config
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd"
