@@ -12,7 +12,7 @@ function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
     return $str;
 }
 
-$iconPath = "view/frontend/web/svg/default";
+$iconPath = "view/base/web/svg/default";
 $dir = dirname(__DIR__, 1) . "/" . $iconPath;
 $icons = array_diff(scandir($dir), array('..', '.'));
 sort($icons);

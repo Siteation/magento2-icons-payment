@@ -39,17 +39,17 @@ Each style has its own view model, so you pick the look by picking the view mode
 
 ![ideal-logo] ![maestro-logo] ![paypal-logo]
 
-[ideal-logo]: ./view/frontend/web/svg/default/ideal.svg
-[maestro-logo]: ./view/frontend/web/svg/default/maestro.svg
-[paypal-logo]: ./view/frontend/web/svg/default/paypal.svg
+[ideal-logo]: ./view/base/web/svg/default/ideal.svg
+[maestro-logo]: ./view/base/web/svg/default/maestro.svg
+[paypal-logo]: ./view/base/web/svg/default/paypal.svg
 
 #### Flat
 
 ![ideal-logo-flat] ![maestro-logo-flat] ![paypal-logo-flat]
 
-[ideal-logo-flat]: ./view/frontend/web/svg/flat/ideal.svg
-[maestro-logo-flat]: ./view/frontend/web/svg/flat/maestro.svg
-[paypal-logo-flat]: ./view/frontend/web/svg/flat/paypal.svg
+[ideal-logo-flat]: ./view/base/web/svg/flat/ideal.svg
+[maestro-logo-flat]: ./view/base/web/svg/flat/maestro.svg
+[paypal-logo-flat]: ./view/base/web/svg/flat/paypal.svg
 
 #### Mono
 
