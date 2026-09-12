@@ -1,6 +1,6 @@
 {
   "name": "siteation/magento2-icons-payment",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "magento2-module",
   "description": "Payment-method icons for Magento 2. The SVG library plus view models that render an <img> anywhere, and inline SVG through Hyvä where it is installed.",
